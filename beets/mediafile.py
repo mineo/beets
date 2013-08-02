@@ -867,6 +867,12 @@ class MediaFile(object):
             mutagen.asf.error,
             mutagen.apev2.error,
         )
+
+        if os.path.splitext(path)[1].lower() == '.wvc':
+            log.debug("Skipping WavPack correction file {0}".format(path))
+            raise FileTypeError(
+                'wavpack correction files do not contain metadata')
+
         try:
             self.mgfile = mutagen.File(path)
         except unreadable_exc as exc:
